@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Header from "@/components/Header";
 import "./globals.scss";
 
 export const metadata: Metadata = {
@@ -15,9 +16,7 @@ export default function RootLayout({
     <html lang="pt-BR">
       <body>
         <div className="dashboard-grid">
-          <header className="area-header">
-            Header (Logo | Busca | User)
-          </header>
+          <Header />
 
           <aside className="area-sidebar">
             Sidebar (Navegação)
