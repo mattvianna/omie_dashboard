@@ -1,0 +1,49 @@
+@use '@/styles/variables' as *;
+
+.headerContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: $primary-color;
+  padding: $spacing-lg;
+}
+
+.searchFilter {
+  flex: 1;
+  display: flex;
+  margin: 0 $spacing-xl;
+  gap: $spacing-sm;
+
+  .searchBox {
+    flex: .5;
+    display: flex;
+    align-items: center;
+    background-color: $tertiary-color;
+    border: 1px solid $border-neutral;
+    border-radius: $border-radius;
+    padding: $spacing-sm $spacing-md;
+
+    input {
+      flex: 1;
+      border: none;
+      outline: none;
+      background: transparent;
+      color: $text-color;
+      font-size: 1rem;
+
+      &::placeholder {
+        color: $text-light;
+      }
+    }
+  }
+
+  .filterButton {
+    margin-right: $spacing-sm;
+    background-color: $tertiary-color;
+    color: $text-color;
+    border: 1px solid $border-neutral;
+    border-radius: $border-radius;
+    padding: $spacing-sm $spacing-md;
+    cursor: pointer;
+  }
+}
