@@ -71,6 +71,11 @@ Nova rota `/produtos`:
 - **Metadados Ricos:** Exibição condicionada de SKU, Dimensões, Rating e Status de Estoque.
 - **Performance:** Scroll Infinito Virtualizado e otimização de imagens (`sizes` dinâmico).
 
+### 10. Gestão de Usuários
+Mantive a lógica usada em produtos, optei por manter o grid utilizando apenas cards.
+**Tipagem Estrita:** Interfaces TypeScript completas.
+- **Camada de Serviço:** Separação de responsabilidade em `services/users.ts` com tratamento de erros robusto.
+
 ### 10. UX & UI Design
 - **Ícones SVG Nativos:** Biblioteca interna de ícones (`src/components/icons`) com suporte a `currentColor`.
 - **Layout Responsivo:** Grid CSS inteligente que se adapta de mobile a telas ultrawide sem media queries complexas.
