@@ -31,7 +31,7 @@ export default function Sidebar() {
               className={styles.navLink}
               data-active={isActive}
             >
-              <IconComponent size={20} />
+              {IconComponent}
               <span>{item.name}</span>
             </Link>
           );

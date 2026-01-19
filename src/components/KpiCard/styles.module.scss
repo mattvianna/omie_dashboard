@@ -38,13 +38,22 @@
   }
 }
 
+
 .iconWrapper {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%; // Círculo perfeito
+
+  // Fundo sutil (10% da cor secundária)
+  background-color: rgba($secondary-color, 0.15);
+
+  // Cor do ícone (Um tom mais escuro para contraste ou o próprio preto/cinza)
+  color: $secondary-color;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 48px;
-  height: 48px;
-  border-radius: 12px;
-  background-color: rgba($primary-color, 0.3);
-  color: $text-light;
+  transition: all 0.2s ease;
+
+  // Se quiser que o ícone não encolha em telas pequenas
+  flex-shrink: 0;
 }

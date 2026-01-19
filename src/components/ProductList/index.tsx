@@ -3,19 +3,30 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import Image from 'next/image';
 import { Product } from '@/types/product';
+import { Icons } from '@/components/icons';
 import styles from './styles.module.scss';
 
 interface ProductListProps {
   products: Product[];
 }
 
-const ITEMS_PER_PAGE = 10;
+const formatDate = (isoString: string) => {
+  if (!isoString) return '-';
+  return new Date(isoString).toLocaleDateString('pt-BR', {
+    day: '2-digit',
+    month: '2-digit',
+    year: '2-digit'
+  });
+};
+
+const ITEMS_PER_PAGE = 12;
 
 export default function ProductList({ products: allProducts = [] }: ProductListProps) {
   const [visibleCount, setVisibleCount] = useState(ITEMS_PER_PAGE);
   const [showScrollBtn, setShowScrollBtn] = useState(false);
 
   const sentinelRef = useRef<HTMLDivElement>(null);
+
   const visibleProducts = allProducts.slice(0, visibleCount);
   const hasMore = visibleCount < allProducts.length;
 
@@ -25,7 +36,7 @@ export default function ProductList({ products: allProducts = [] }: ProductListP
 
     setTimeout(() => {
       setVisibleCount((prev) => Math.min(prev + ITEMS_PER_PAGE, allProducts.length));
-    }, 300);
+    }, 500);
   }, [hasMore, allProducts.length]);
 
   // Mantém a referência da função loadMore atualizada
@@ -71,53 +82,53 @@ export default function ProductList({ products: allProducts = [] }: ProductListP
   };
 
   return (
-    <div className={styles.listContainer}>
-      <div className={styles.header}>
-        <span>Imagem</span>
-        <span>Produto</span>
-        <span>Categoria</span>
-        <span>Preço</span>
-        <span>Estoque</span>
-        <span>Status</span>
-      </div>
-
-      <ul className={styles.listContent}>
+    <div className={styles.container}>
+      <div className={styles.gridContainer}>
         {visibleProducts.map((product) => {
           const isLowStock = product.stock < 5;
+
           return (
-            <li key={product.id} className={styles.item}>
-              <div className={styles.imageWrapper}>
+            <article key={product.id} className={styles.card}>
+
+              {/* IMAGEM + TAGS SOBREPOSTAS */}
+              <div className={styles.imageContainer}>
+                <div className={styles.overlayTags}>
+                  <span className={styles.ratingTag}>
+                    {Icons.StarRating}
+                    {product.rating}
+                  </span>
+                  {/* Se tiver desconto, pode por aqui tbm */}
+                </div>
+
                 <Image
                   src={product.thumbnail}
                   alt={product.title}
                   fill
-                  sizes="48px"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                   style={{ objectFit: 'cover' }}
                 />
               </div>
 
-              <div className={styles.productInfo}>
-                <strong>{product.title}</strong>
-                <small>{product.brand}</small>
+              {/* CONTEÚDO */}
+              <div className={styles.content}>
+                <span className={styles.category}>{product.category}</span>
+                <h3 className={styles.title} title={product.title}>{product.title}</h3>
+
+                <div className={styles.footer}>
+                  <div className={styles.price}>
+                    {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(product.price)}
+                  </div>
+
+                  <div className={`${styles.stock} ${isLowStock ? styles.low : styles.ok}`}>
+                    {isLowStock ? 'Últimas un.' : `${product.stock} un.`}
+                  </div>
+                </div>
               </div>
 
-              <span>
-                {product.category}
-              </span>
-
-              <strong>
-                {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(product.price)}
-              </strong>
-
-              <span>{product.stock} un.</span>
-
-              <div className={`${styles.badge} ${isLowStock ? styles.lowStock : styles.inStock}`}>
-                {isLowStock ? 'Baixo Estoque' : 'Disponível'}
-              </div>
-            </li>
+            </article>
           );
         })}
-      </ul>
+      </div>
 
       {hasMore && (
         <div ref={sentinelRef} className={styles.loadingSentinel}>
