@@ -1,0 +1,62 @@
+@use '@/styles/variables' as *;
+
+.sideBarContainer {
+  background-color: $bg-sidebar;
+  display: flex;
+  flex-direction: column;
+  padding: $spacing-xl $spacing-md;
+  gap: $spacing-xxl;
+  height: 100%;
+}
+
+.menuGroup {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-sm;
+
+  .groupTitle {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    color: $text-light;
+    font-weight: 700;
+    padding-left: $spacing-md;
+    margin-bottom: $spacing-xl;
+  }
+}
+
+.navLink {
+  display: flex;
+  align-items: center;
+  gap: $spacing-md;
+  padding: 12px $spacing-md;
+  border-radius: $border-radius;
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: $text-white;
+
+  transition: all 0.2s ease-in-out;
+  position: relative;
+
+  svg {
+    stroke: currentColor;
+    transition: stroke 0.2s;
+  }
+
+  &:hover {
+    background-color: $hover-bg-color;
+    color: $text-light;
+  }
+
+  &[data-active="true"] {
+    background-color: $bg-card-color;
+    color: $text-color;
+    font-weight: 600;
+
+    box-shadow: inset 4px 0 0 $secondary-color;
+
+    svg {
+      stroke: $text-color;
+    }
+  }
+}

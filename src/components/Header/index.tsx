@@ -6,7 +6,7 @@ export default function Header() {
     <header className={`area-header ${styles.headerContainer}`}>
       <div className={styles.logo}>
         <Image
-          src="/logo-omie-petroleo.png"
+          src="/logo-omie.png"
           alt="Omie Logo"
           width={128}
           height={40}

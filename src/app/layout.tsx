@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Header from "@/components/Header";
+import Sidebar from "@/components/Sidebar";
 import "./globals.scss";
 
 export const metadata: Metadata = {
@@ -17,10 +18,7 @@ export default function RootLayout({
       <body>
         <div className="dashboard-grid">
           <Header />
-
-          <aside className="area-sidebar">
-            Sidebar (Navegação)
-          </aside>
+          <Sidebar />
 
           <main className="area-main">
             {children}

@@ -1,17 +1,21 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap');
+
 // Cores da Marca
 $primary-color: #ccf9fc;
 $secondary-color: #d8fe00;
 $tertiary-color: #ffffff;
 
 // Tipografia
+$font-family-base: 'Montserrat', sans-serif;
 $text-color: #001e27;
 $text-light: #5a7b85;
-$text-white: #ffffff;
+$text-white: #f5f5f5;
 
 // Fundos
-$bg-body: #f2f3f3;
-$bg-sidebar: #ffffff;
-$bg-header: #ffffff;
+$bg-body: #001e27;
+$bg-sidebar: #001e27;
+$bg-header: #001e27;
+$bg-main: #f5f5f5;
 $bg-card-color: #e0f7fa;
 
 // Bordas e Efeitos
@@ -30,7 +34,7 @@ $spacing-xl: 32px;
 $spacing-xxl: 48px;
 
 // Dimensões do Layout
-$header-height: 60px;
+$header-height: 80px;
 $sidebar-width: 250px;
 
 // Breakpoints para Responsividade
