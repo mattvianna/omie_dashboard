@@ -1,0 +1,38 @@
+@use '@/styles/variables' as *;
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-xl;
+  height: 100%;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  // Removi o justify-content: space-between pois só temos o título agora
+  margin-bottom: $spacing-md;
+
+  .titleGroup {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-xl;
+
+    h1 {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: $text-color;
+    }
+
+    p {
+      color: $text-light;
+      font-size: 0.9rem;
+    }
+  }
+}
+
+// Removi a classe .addButton
+
+.content {
+  flex: 1;
+}

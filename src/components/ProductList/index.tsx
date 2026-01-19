@@ -3,19 +3,22 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import Image from 'next/image';
 import { Product } from '@/types/product';
+import { Icons } from '@/components/icons';
 import styles from './styles.module.scss';
 
 interface ProductListProps {
   products: Product[];
 }
 
-const ITEMS_PER_PAGE = 10;
+const ITEMS_PER_PAGE = 8;
 
 export default function ProductList({ products: allProducts = [] }: ProductListProps) {
+  const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   const [visibleCount, setVisibleCount] = useState(ITEMS_PER_PAGE);
   const [showScrollBtn, setShowScrollBtn] = useState(false);
 
   const sentinelRef = useRef<HTMLDivElement>(null);
+
   const visibleProducts = allProducts.slice(0, visibleCount);
   const hasMore = visibleCount < allProducts.length;
 
@@ -25,7 +28,7 @@ export default function ProductList({ products: allProducts = [] }: ProductListP
 
     setTimeout(() => {
       setVisibleCount((prev) => Math.min(prev + ITEMS_PER_PAGE, allProducts.length));
-    }, 300);
+    }, 500);
   }, [hasMore, allProducts.length]);
 
   // Mantém a referência da função loadMore atualizada
@@ -71,53 +74,81 @@ export default function ProductList({ products: allProducts = [] }: ProductListP
   };
 
   return (
-    <div className={styles.listContainer}>
-      <div className={styles.header}>
-        <span>Imagem</span>
-        <span>Produto</span>
-        <span>Categoria</span>
-        <span>Preço</span>
-        <span>Estoque</span>
-        <span>Status</span>
+    <div className={styles.container}>
+
+      <div className={styles.controlsHeader}>
+        <div className={styles.toggleGroup}>
+          <button
+            className={`${styles.toggleBtn} ${viewMode === 'grid' ? styles.active : ''}`}
+            onClick={() => setViewMode('grid')}
+            title="Visualização em Grade"
+          >
+            {Icons.Grid}
+          </button>
+          <button
+            className={`${styles.toggleBtn} ${viewMode === 'list' ? styles.active : ''}`}
+            onClick={() => setViewMode('list')}
+            title="Visualização em Lista"
+          >
+            {Icons.List}
+          </button>
+        </div>
       </div>
 
-      <ul className={styles.listContent}>
+      <div className={`${styles.gridContainer} ${viewMode === 'list' ? styles.listView : styles.gridView}`}>
         {visibleProducts.map((product) => {
           const isLowStock = product.stock < 5;
+
           return (
-            <li key={product.id} className={styles.item}>
-              <div className={styles.imageWrapper}>
+            <article key={product.id} className={styles.card}>
+
+              <div className={styles.imageContainer}>
+                {viewMode === 'grid' && (
+                  <div className={styles.overlayTags}>
+                    <span className={styles.ratingTag}>
+                      {Icons.StarRating}
+                      {product.rating}
+                    </span>
+                  </div>
+                )}
+
                 <Image
                   src={product.thumbnail}
                   alt={product.title}
                   fill
-                  sizes="48px"
-                  style={{ objectFit: 'cover' }}
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  className={styles.productImage}
                 />
               </div>
 
-              <div className={styles.productInfo}>
-                <strong>{product.title}</strong>
-                <small>{product.brand}</small>
+              <div className={styles.content}>
+                <div className={styles.titleGroup}>
+                  <span className={styles.category}>{product.category}</span>
+                  <h3 className={styles.title} title={product.title}>{product.title}</h3>
+                </div>
+
+                {viewMode === 'list' && (
+                  <span className={styles.ratingTag}>
+                    {Icons.StarRating}
+                    {product.rating}
+                  </span>
+                )}
+
+                <div className={styles.footer}>
+                  <div className={styles.price}>
+                    {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(product.price)}
+                  </div>
+
+                  <div className={`${styles.stock} ${isLowStock ? styles.low : styles.ok}`}>
+                    {isLowStock ? 'Últimas un.' : `${product.stock} un.`}
+                  </div>
+                </div>
               </div>
 
-              <span>
-                {product.category}
-              </span>
-
-              <strong>
-                {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(product.price)}
-              </strong>
-
-              <span>{product.stock} un.</span>
-
-              <div className={`${styles.badge} ${isLowStock ? styles.lowStock : styles.inStock}`}>
-                {isLowStock ? 'Baixo Estoque' : 'Disponível'}
-              </div>
-            </li>
+            </article>
           );
         })}
-      </ul>
+      </div>
 
       {hasMore && (
         <div ref={sentinelRef} className={styles.loadingSentinel}>

@@ -1,111 +1,240 @@
 @use '@/styles/variables' as *;
 
-.listContainer {
+.container {
   display: flex;
   flex-direction: column;
-  gap: $spacing-sm;
-}
-
-@mixin list-grid {
-  display: grid;
-  grid-template-columns: 60px 2fr 1fr 1fr 100px 140px;
-  align-items: center;
   gap: $spacing-md;
-  padding: $spacing-md;
 }
 
-.header {
-  @include list-grid;
-  background-color: transparent;
-  border-bottom: 1px solid $border-neutral;
-  margin-bottom: $spacing-xl;
+.controlsHeader {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 8px;
+}
 
-  span {
-    font-size: 0.75rem;
-    text-transform: uppercase;
-    color: $text-light;
-    font-weight: 700;
-    letter-spacing: 0.05em;
+.toggleGroup {
+  display: flex;
+  background: $bg-main;
+  border-radius: $border-radius;
+  gap: $spacing-xs;
+  border: 1px solid $border-neutral;
+}
+
+.toggleBtn {
+  border: none;
+  background: transparent;
+  padding: calc(#{$spacing-sm} - 2px) calc(#{$spacing-md} - 4px);
+  border-radius: $border-radius;
+  color: $text-color;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  transition: all 0.2s;
+
+  &:hover {
+    color: $text-color;
+  }
+
+  &.active {
+    background: $tertiary-color;
+    color: $text-color;
+    box-shadow: 0 2px 4px rgba($text-color, 0.4);
+    font-weight: bold;
   }
 }
 
-.listContent {
+.gridContainer {
+  display: grid;
+  gap: $spacing-lg;
+  padding-bottom: $spacing-xl;
+
+  &.gridView {
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  }
+
+  &.listView {
+    grid-template-columns: 1fr;
+    gap: $spacing-md;
+  }
+}
+
+.card {
+  background: $tertiary-color;
+  border: 1px solid $border-neutral;
+  border-radius: $border-radius;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
-  gap: $spacing-sm;
+  transition: all 0.2s ease-in-out;
+  position: relative;
 
-  .item {
-    @include list-grid;
-    background-color: #fff;
-    border: 1px solid $border-neutral;
-    border-radius: $border-radius;
-    transition: all 0.2s ease-in-out;
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
+    border-color: $secondary-color;
+  }
 
-    span {
-      text-transform: 'capitalize';
-      color: '#666';
-    }
+  .listView & {
+    flex-direction: row;
+    align-items: center;
+    height: 80px;
+    padding-right: $spacing-md;
 
     &:hover {
-      transform: translateY(-2px);
-      border-color: $secondary-color;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      transform: translateX($spacing-xs);
     }
   }
 }
 
-.productInfo {
+.imageContainer {
+  width: 100%;
+  aspect-ratio: 4/3;
+  position: relative;
+  background: $bg-image;
+  border-bottom: 1px solid $border-neutral;
+  overflow: hidden;
+
+  .productImage {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+  }
+
+  .listView & {
+    width: 80px;
+    height: 100%;
+    aspect-ratio: auto;
+    border-bottom: none;
+    border-right: 1px solid $border-neutral;
+
+    .overlayTags {
+      display: none;
+    }
+  }
+
+  img {
+    transition: transform 0.3s;
+  }
+
+  &:hover img {
+    transform: scale(1.05);
+  }
+}
+
+.content {
+  padding: $spacing-md;
   display: flex;
   flex-direction: column;
+  flex: 1;
+  gap: $spacing-md;
 
-  strong {
-    color: $text-color;
-    font-size: 0.95rem;
-  }
-
-  small {
-    color: $text-light;
-    font-size: 0.8rem;
+  .listView & {
+    flex-direction: row;
+    align-items: center;
+    padding: 0 $spacing-md;
+    justify-content: space-between;
   }
 }
 
-.imageWrapper {
-  width: 48px;
-  height: 48px;
-  position: relative;
-  border-radius: 8px;
-  overflow: hidden;
-  border: 1px solid $border-neutral;
-  background-color: $bg-image;
+.overlayTags {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  right: 10px;
+  display: flex;
+  justify-content: space-between;
+  z-index: 2;
 }
 
-.badge {
-  text-align: center;
-  padding: 4px 12px;
-  border-radius: 20px;
+.ratingTag {
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(4px);
+  color: $text-white;
+  padding: $spacing-xs $spacing-sm;
+  border-radius: $border-radius;
   font-size: 0.75rem;
   font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: $spacing-xs;
 
-  &.inStock {
-    background-color: rgba($active-bg-color, 0.1);
-    color: $text-success;
-  }
-
-  &.lowStock {
-    background-color: rgba($error-bg-color, 0.1);
-    color: $text-error;
+  svg {
+    color: $bg-star-rating;
+    fill: $bg-star-rating;
+    width: 12px;
+    height: 12px;
   }
 }
 
-.loadingSentinel {
+.titleGroup {
   display: flex;
-  justify-content: center;
-  padding: $spacing-lg;
+  flex-direction: column;
+  gap: $spacing-xs;
+
+  .listView & {
+    flex: 1;
+    min-width: 0;
+  }
+}
+
+.title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: $text-color;
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+
+  .listView & {
+    -webkit-line-clamp: 1;
+    line-clamp: 1;
+    margin-bottom: 0;
+  }
+}
+
+.category {
+  font-size: 0.8rem;
   color: $text-light;
-  font-size: 0.9rem;
+  text-transform: capitalize;
+}
+
+.footer {
+  margin-top: auto;
+  padding-top: $spacing-md;
+  border-top: 1px solid $border-neutral;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .listView & {
+    margin-top: 0;
+    padding-top: 0;
+    border-top: none;
+    gap: $spacing-lg;
+    min-width: 200px;
+  }
+}
+
+.price {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: $text-color;
+}
+
+.stock {
+  font-size: 0.8rem;
   font-weight: 500;
 
-  animation: pulse 1.5s infinite;
+  &.low {
+    color: $error-bg-color;
+  }
+
+  &.ok {
+    color: $active-bg-color;
+  }
 }
 
 @keyframes pulse {
@@ -122,10 +251,17 @@
   }
 }
 
+.loadingSentinel {
+  text-align: center;
+  font-size: 1rem;
+  color: $text-light;
+  padding: $spacing-lg;
+}
+
 .endMessage {
   text-align: center;
   color: $text-light;
-  padding: 20px;
+  padding: $spacing-lg;
   font-size: 0.85rem;
 }
 
@@ -147,7 +283,7 @@
   transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   z-index: 100;
   opacity: 0;
-  transform: translateY(20px);
+  transform: translateY($spacing-lg);
   pointer-events: none;
 
   &.visible {
