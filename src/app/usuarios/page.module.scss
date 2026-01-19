@@ -1,0 +1,29 @@
+@use '@/styles/variables' as *;
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-xl;
+  padding: $spacing-lg;
+  min-height: 100vh;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-xs;
+  margin-bottom: $spacing-md;
+
+  h1 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: $text-color;
+    margin: 0;
+  }
+
+  p {
+    color: $text-light;
+    font-size: 0.9rem;
+    margin: 0;
+  }
+}

@@ -1,0 +1,210 @@
+@use '@/styles/variables' as *;
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-md;
+}
+
+.gridContainer {
+  display: grid;
+  gap: $spacing-md;
+  padding-bottom: $spacing-xl;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: $spacing-md;
+}
+
+.card {
+  background: $tertiary-color;
+  border: 1px solid $border-neutral;
+  border-radius: $border-radius;
+  padding: $spacing-md;
+  display: flex;
+  transition: all 0.2s ease;
+  position: relative;
+  flex-direction: column;
+  gap: 16px;
+
+  &:hover {
+    border-color: $secondary-color;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  }
+}
+
+.sectionIdentity {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: $spacing-md;
+}
+
+.avatarWrapper {
+  width: 72px;
+  height: 72px;
+  position: relative;
+}
+
+.avatarImageWrapper {
+  display: block;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+  border-radius: 50%;
+  border: 3px solid $border-highlight;
+
+  .avatarImage {
+    object-fit: cover;
+  }
+}
+
+.identityText {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-xs;
+}
+
+.name {
+  font-size: 1rem;
+  font-weight: 700;
+  color: $text-color;
+  line-height: 1.2;
+}
+
+.username {
+  font-size: 0.85rem;
+  color: $text-color;
+}
+
+.demographics {
+  font-size: 0.75rem;
+  color: $text-color;
+  margin-top: $spacing-xs;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: $spacing-xs;
+}
+
+.dot {
+  font-size: 0.6rem;
+  color: $text-light;
+}
+
+.roleBadge {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  background: $bg-body;
+  color: $text-white;
+  font-size: 0.6rem;
+  padding: 0px $spacing-sm;
+  border-radius: $border-radius;
+  text-transform: uppercase;
+  font-weight: 700;
+  border: 2px solid $border-neutral;
+
+  &.admin {
+    background: $bg-badge-admin;
+  }
+
+  &.user {
+    background: $bg-badge-user;
+  }
+}
+
+// --- SEÇÕES DE DADOS (Trabalho, Contato, Local) ---
+.sectionInfo {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-xs;
+  font-size: 0.85rem;
+  border-top: 1px solid $border-neutral;
+  padding-top: $spacing-md;
+}
+
+.sectionTitle {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  color: $text-light;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  margin-bottom: $spacing-xs;
+}
+
+.infoRow {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: $text-color;
+
+  strong {
+    color: $text-color;
+  }
+}
+
+.loadingSentinel {
+  text-align: center;
+  font-size: 1rem;
+  color: $text-light;
+  padding: $spacing-lg;
+}
+
+.endMessage {
+  text-align: center;
+  color: $text-light;
+  padding: $spacing-lg;
+  font-size: 0.85rem;
+}
+
+.backToTop {
+  position: fixed;
+  bottom: 32px;
+  right: 32px;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background-color: $secondary-color;
+  color: $text-color;
+  border: none;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  z-index: 100;
+  opacity: 0;
+  transform: translateY($spacing-lg);
+  pointer-events: none;
+
+  &.visible {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: all;
+  }
+
+  &:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 16px rgba($secondary-color, 0.4);
+  }
+}
+
+
+@media (max-width: $mobile-breakpoint) {
+  .header {
+    display: none;
+  }
+
+  .item {
+    grid-template-columns: 60px 1fr;
+    gap: $spacing-sm;
+
+    >*:nth-child(3),
+    >*:nth-child(5) {
+      display: none;
+    }
+  }
+}
