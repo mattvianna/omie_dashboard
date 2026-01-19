@@ -33,3 +33,27 @@ Para a organização dos assets SVG, apliquei o padrão **Barrel File**.
   ```tsx
   import { Icons } from '@/components/icons';
   ```
+
+### 5. Estratégia de Dados
+Tomei como decisão exibir apenas 10 produtos por vez e consumir no máximo 60 itens da API. Para garantir a consistência matemática entre os KPIs e a listagem, adotei uma estratégia de carregamento unificado no Servidor `page.tsx`.
+
+* **Problema:** Calcular KPIs baseados em paginação parcial (ex: apenas os 10 primeiros) geraria dados falsos (o preço médio ficaria incorreto).
+* **Solução:** O Server Component busca o escopo total definido (60 itens) de uma única vez.
+* **Benefício:** Os Cards de KPI (Total, Estoque, Preço Médio) são calculados com precisão sobre o todo, enquanto a lista recebe os dados já carregados, eliminando "loaders" adicionais e requisições duplicadas.
+
+### 6. Performance: Renderização Progressiva
+Embora o cliente receba os 60 itens, renderizar todos de uma vez afetaria a performance inicial.
+
+* **Técnica:** Implementação de uma lista com carregamento sob demanda (Infinite Scroll) sem requisições de rede.
+* **Funcionamento:** O componente mantém os dados em memória mas injeta no DOM apenas lotes de 10 itens. Conforme o usuário rola, novos lotes são liberados.
+
+### 7. Otimização Avançada: Observer Pattern com useRef
+Para o scroll infinito, utilizei a API IntersectionObserver com o padrão Ref Bridge.
+
+* **Desafio:** A implementação do Observer exige recriar a instância toda vez que o estado da lista muda, causando perda de performance.
+
+* **Solução:**
+  * Utilizei useRef para armazenar a função de carga (loadMore).
+  * O IntersectionObserver é instanciado apenas uma única vez (na montagem).
+
+Quando o gatilho é acionado, o Observer acessa a referência mutável (.current) da função, garantindo acesso ao estado mais recente sem precisar desconectar e reconectar o observador.
