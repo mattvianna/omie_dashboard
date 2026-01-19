@@ -5,12 +5,10 @@
   border: 1px solid $border-neutral;
   border-radius: $border-radius;
   padding: $spacing-lg;
-
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
   gap: $spacing-md;
-
   transition: transform 0.2s, box-shadow 0.2s;
 
   &:hover {
@@ -42,18 +40,12 @@
 .iconWrapper {
   width: 56px;
   height: 56px;
-  border-radius: 50%; // Círculo perfeito
-
-  // Fundo sutil (10% da cor secundária)
+  border-radius: 50%;
   background-color: rgba($secondary-color, 0.15);
-
-  // Cor do ícone (Um tom mais escuro para contraste ou o próprio preto/cinza)
   color: $secondary-color;
   display: flex;
   align-items: center;
   justify-content: center;
   transition: all 0.2s ease;
-
-  // Se quiser que o ícone não encolha em telas pequenas
   flex-shrink: 0;
 }

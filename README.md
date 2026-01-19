@@ -57,3 +57,21 @@ Para o scroll infinito, utilizei a API IntersectionObserver com o padrão Ref Br
   * O IntersectionObserver é instanciado apenas uma única vez (na montagem).
 
 Quando o gatilho é acionado, o Observer acessa a referência mutável (.current) da função, garantindo acesso ao estado mais recente sem precisar desconectar e reconectar o observador.
+
+### 8. Dashboard Estratégico
+Remodelei o painel para uma visão mais alinhada com o wireframes:
+- **KPIs de Negócio:** Total de Produtos, Média de Preço, Diversidade de Categorias e Estoque Total.
+- **Componentização:** Cards de KPI reutilizáveis com suporte a injeção de ícones SVG otimizados.
+
+### 9. Gestão de Produtos
+Nova rota `/produtos`:
+- **Listagem Híbrida:** Sistema de visualização flexível com alternância instantânea entre:
+  - **Modo Grid (Cards):** Foco visual na imagem e destaques do produto.
+  - **Modo Lista (Tabela):** Foco em densidade de dados e comparação rápida.
+- **Metadados Ricos:** Exibição condicionada de SKU, Dimensões, Rating e Status de Estoque.
+- **Performance:** Scroll Infinito Virtualizado e otimização de imagens (`sizes` dinâmico).
+
+### 10. UX & UI Design
+- **Ícones SVG Nativos:** Biblioteca interna de ícones (`src/components/icons`) com suporte a `currentColor`.
+- **Layout Responsivo:** Grid CSS inteligente que se adapta de mobile a telas ultrawide sem media queries complexas.
+- **Micro-interações:** Efeitos de hover, transições suaves de layout e feedbacks visuais.

@@ -1,20 +1,67 @@
 @use '@/styles/variables' as *;
 
-// --- 1. O GRID MÁGICO ---
-.gridContainer {
-  display: grid;
-  // O segredo: cria colunas de no mínimo 260px.
-  // Se a tela for gigante, cabem 5 cards. Se for celular, cabe 1.
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: $spacing-lg;
-  padding-bottom: 40px;
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-md;
 }
 
-// --- 2. O CARD (Cartão do Produto) ---
-.card {
-  background: #fff;
+.controlsHeader {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 8px;
+}
+
+.toggleGroup {
+  display: flex;
+  background: $bg-main;
+  border-radius: $border-radius;
+  gap: $spacing-xs;
   border: 1px solid $border-neutral;
-  border-radius: 12px; // Borda mais arredondada estilo app moderno
+}
+
+.toggleBtn {
+  border: none;
+  background: transparent;
+  padding: calc(#{$spacing-sm} - 2px) calc(#{$spacing-md} - 4px);
+  border-radius: $border-radius;
+  color: $text-color;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  transition: all 0.2s;
+
+  &:hover {
+    color: $text-color;
+  }
+
+  &.active {
+    background: $tertiary-color;
+    color: $text-color;
+    box-shadow: 0 2px 4px rgba($text-color, 0.4);
+    font-weight: bold;
+  }
+}
+
+.gridContainer {
+  display: grid;
+  gap: $spacing-lg;
+  padding-bottom: $spacing-xl;
+
+  &.gridView {
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  }
+
+  &.listView {
+    grid-template-columns: 1fr;
+    gap: $spacing-md;
+  }
+}
+
+.card {
+  background: $tertiary-color;
+  border: 1px solid $border-neutral;
+  border-radius: $border-radius;
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -26,37 +73,69 @@
     box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
     border-color: $secondary-color;
   }
+
+  .listView & {
+    flex-direction: row;
+    align-items: center;
+    height: 80px;
+    padding-right: $spacing-md;
+
+    &:hover {
+      transform: translateX($spacing-xs);
+    }
+  }
 }
 
-// Área da Imagem (Quadrada ou 4:3)
 .imageContainer {
   width: 100%;
-  aspect-ratio: 4/3; // Formato retangular agradável
+  aspect-ratio: 4/3;
   position: relative;
-  background: #f8f9fa;
+  background: $bg-image;
   border-bottom: 1px solid $border-neutral;
   overflow: hidden;
+
+  .productImage {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+  }
+
+  .listView & {
+    width: 80px;
+    height: 100%;
+    aspect-ratio: auto;
+    border-bottom: none;
+    border-right: 1px solid $border-neutral;
+
+    .overlayTags {
+      display: none;
+    }
+  }
 
   img {
     transition: transform 0.3s;
   }
 
-  // Zoom suave na imagem ao passar o mouse
   &:hover img {
     transform: scale(1.05);
   }
 }
 
-// Conteúdo do Card
 .content {
-  padding: 16px;
+  padding: $spacing-md;
   display: flex;
   flex-direction: column;
-  flex: 1; // Ocupa o resto da altura
-  gap: 8px;
+  flex: 1;
+  gap: $spacing-md;
+
+  .listView & {
+    flex-direction: row;
+    align-items: center;
+    padding: 0 $spacing-md;
+    justify-content: space-between;
+  }
 }
 
-// Tags flutuantes sobre a imagem (Rating e Status)
 .overlayTags {
   position: absolute;
   top: 10px;
@@ -70,19 +149,31 @@
 .ratingTag {
   background: rgba(0, 0, 0, 0.7);
   backdrop-filter: blur(4px);
-  color: #fff;
-  padding: 4px 8px;
-  border-radius: 6px;
+  color: $text-white;
+  padding: $spacing-xs $spacing-sm;
+  border-radius: $border-radius;
   font-size: 0.75rem;
   font-weight: 700;
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: $spacing-xs;
 
   svg {
-    color: #f59e0b;
+    color: $bg-star-rating;
+    fill: $bg-star-rating;
     width: 12px;
     height: 12px;
+  }
+}
+
+.titleGroup {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-xs;
+
+  .listView & {
+    flex: 1;
+    min-width: 0;
   }
 }
 
@@ -91,13 +182,17 @@
   font-weight: 600;
   color: $text-color;
   line-height: 1.4;
-
-  // Limita a 2 linhas para não quebrar o card
   display: -webkit-box;
   -webkit-line-clamp: 2;
   line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
+
+  .listView & {
+    -webkit-line-clamp: 1;
+    line-clamp: 1;
+    margin-bottom: 0;
+  }
 }
 
 .category {
@@ -107,12 +202,20 @@
 }
 
 .footer {
-  margin-top: auto; // Empurra para o final do card
-  padding-top: 12px;
+  margin-top: auto;
+  padding-top: $spacing-md;
   border-top: 1px solid $border-neutral;
   display: flex;
   justify-content: space-between;
   align-items: center;
+
+  .listView & {
+    margin-top: 0;
+    padding-top: 0;
+    border-top: none;
+    gap: $spacing-lg;
+    min-width: 200px;
+  }
 }
 
 .price {
@@ -126,11 +229,11 @@
   font-weight: 500;
 
   &.low {
-    color: #e53e3e;
+    color: $error-bg-color;
   }
 
   &.ok {
-    color: #38a169;
+    color: $active-bg-color;
   }
 }
 
@@ -152,13 +255,13 @@
   text-align: center;
   font-size: 1rem;
   color: $text-light;
-  padding: 20px;
+  padding: $spacing-lg;
 }
 
 .endMessage {
   text-align: center;
   color: $text-light;
-  padding: 20px;
+  padding: $spacing-lg;
   font-size: 0.85rem;
 }
 
@@ -180,7 +283,7 @@
   transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   z-index: 100;
   opacity: 0;
-  transform: translateY(20px);
+  transform: translateY($spacing-lg);
   pointer-events: none;
 
   &.visible {

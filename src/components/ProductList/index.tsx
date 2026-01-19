@@ -10,18 +10,10 @@ interface ProductListProps {
   products: Product[];
 }
 
-const formatDate = (isoString: string) => {
-  if (!isoString) return '-';
-  return new Date(isoString).toLocaleDateString('pt-BR', {
-    day: '2-digit',
-    month: '2-digit',
-    year: '2-digit'
-  });
-};
-
-const ITEMS_PER_PAGE = 12;
+const ITEMS_PER_PAGE = 8;
 
 export default function ProductList({ products: allProducts = [] }: ProductListProps) {
+  const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   const [visibleCount, setVisibleCount] = useState(ITEMS_PER_PAGE);
   const [showScrollBtn, setShowScrollBtn] = useState(false);
 
@@ -83,36 +75,64 @@ export default function ProductList({ products: allProducts = [] }: ProductListP
 
   return (
     <div className={styles.container}>
-      <div className={styles.gridContainer}>
+
+      <div className={styles.controlsHeader}>
+        <div className={styles.toggleGroup}>
+          <button
+            className={`${styles.toggleBtn} ${viewMode === 'grid' ? styles.active : ''}`}
+            onClick={() => setViewMode('grid')}
+            title="Visualização em Grade"
+          >
+            {Icons.Grid}
+          </button>
+          <button
+            className={`${styles.toggleBtn} ${viewMode === 'list' ? styles.active : ''}`}
+            onClick={() => setViewMode('list')}
+            title="Visualização em Lista"
+          >
+            {Icons.List}
+          </button>
+        </div>
+      </div>
+
+      <div className={`${styles.gridContainer} ${viewMode === 'list' ? styles.listView : styles.gridView}`}>
         {visibleProducts.map((product) => {
           const isLowStock = product.stock < 5;
 
           return (
             <article key={product.id} className={styles.card}>
 
-              {/* IMAGEM + TAGS SOBREPOSTAS */}
               <div className={styles.imageContainer}>
-                <div className={styles.overlayTags}>
-                  <span className={styles.ratingTag}>
-                    {Icons.StarRating}
-                    {product.rating}
-                  </span>
-                  {/* Se tiver desconto, pode por aqui tbm */}
-                </div>
+                {viewMode === 'grid' && (
+                  <div className={styles.overlayTags}>
+                    <span className={styles.ratingTag}>
+                      {Icons.StarRating}
+                      {product.rating}
+                    </span>
+                  </div>
+                )}
 
                 <Image
                   src={product.thumbnail}
                   alt={product.title}
                   fill
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                  style={{ objectFit: 'cover' }}
+                  className={styles.productImage}
                 />
               </div>
 
-              {/* CONTEÚDO */}
               <div className={styles.content}>
-                <span className={styles.category}>{product.category}</span>
-                <h3 className={styles.title} title={product.title}>{product.title}</h3>
+                <div className={styles.titleGroup}>
+                  <span className={styles.category}>{product.category}</span>
+                  <h3 className={styles.title} title={product.title}>{product.title}</h3>
+                </div>
+
+                {viewMode === 'list' && (
+                  <span className={styles.ratingTag}>
+                    {Icons.StarRating}
+                    {product.rating}
+                  </span>
+                )}
 
                 <div className={styles.footer}>
                   <div className={styles.price}>
