@@ -1,0 +1,180 @@
+@use '@/styles/variables' as *;
+
+.listContainer {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-sm;
+}
+
+@mixin list-grid {
+  display: grid;
+  grid-template-columns: 60px 2fr 1fr 1fr 100px 140px;
+  align-items: center;
+  gap: $spacing-md;
+  padding: $spacing-md;
+}
+
+.header {
+  @include list-grid;
+  background-color: transparent;
+  border-bottom: 1px solid $border-neutral;
+  margin-bottom: $spacing-xl;
+
+  span {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    color: $text-light;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+  }
+}
+
+.listContent {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-sm;
+
+  .item {
+    @include list-grid;
+    background-color: #fff;
+    border: 1px solid $border-neutral;
+    border-radius: $border-radius;
+    transition: all 0.2s ease-in-out;
+
+    span {
+      text-transform: 'capitalize';
+      color: '#666';
+    }
+
+    &:hover {
+      transform: translateY(-2px);
+      border-color: $secondary-color;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    }
+  }
+}
+
+.productInfo {
+  display: flex;
+  flex-direction: column;
+
+  strong {
+    color: $text-color;
+    font-size: 0.95rem;
+  }
+
+  small {
+    color: $text-light;
+    font-size: 0.8rem;
+  }
+}
+
+.imageWrapper {
+  width: 48px;
+  height: 48px;
+  position: relative;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid $border-neutral;
+  background-color: $bg-image;
+}
+
+.badge {
+  text-align: center;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 700;
+
+  &.inStock {
+    background-color: rgba($active-bg-color, 0.1);
+    color: $text-success;
+  }
+
+  &.lowStock {
+    background-color: rgba($error-bg-color, 0.1);
+    color: $text-error;
+  }
+}
+
+.loadingSentinel {
+  display: flex;
+  justify-content: center;
+  padding: $spacing-lg;
+  color: $text-light;
+  font-size: 0.9rem;
+  font-weight: 500;
+
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 0.6;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0.6;
+  }
+}
+
+.endMessage {
+  text-align: center;
+  color: $text-light;
+  padding: 20px;
+  font-size: 0.85rem;
+}
+
+.backToTop {
+  position: fixed;
+  bottom: 32px;
+  right: 32px;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background-color: $secondary-color;
+  color: $text-color;
+  border: none;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  z-index: 100;
+  opacity: 0;
+  transform: translateY(20px);
+  pointer-events: none;
+
+  &.visible {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: all;
+  }
+
+  &:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 16px rgba($secondary-color, 0.4);
+  }
+}
+
+
+@media (max-width: $mobile-breakpoint) {
+  .header {
+    display: none;
+  }
+
+  .item {
+    grid-template-columns: 60px 1fr;
+    gap: $spacing-sm;
+
+    >*:nth-child(3),
+    >*:nth-child(5) {
+      display: none;
+    }
+  }
+}
