@@ -1,5 +1,4 @@
 @use '@/styles/variables' as *;
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap');
 
 * {
   box-sizing: border-box;
@@ -8,7 +7,7 @@
 }
 
 body {
-  font-family: 'Montserrat', sans-serif;
+  font-family: $font-family-base;
   background-color: $bg-body;
   color: $text-color;
 }
@@ -35,8 +34,11 @@ body {
 
 .area-main {
   grid-area: main;
+  background-color: $bg-main;
   overflow-y: auto;
   padding: $spacing-lg;
+  border-top-left-radius: $border-radius;
+  border-top-right-radius: $border-radius;
 
   &::-webkit-scrollbar {
     width: 8px;

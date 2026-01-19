@@ -18,10 +18,18 @@ Optei por utilizar **CSS Grid Areas** no `layout.tsx` global.
 
 ### 2. Design System & Tokens
 Implementei um sistema de **Design Tokens** via variáveis SCSS (`_variables.scss`).
-* **Paleta de Cores:** Adotei a identidade utilizada no site da Omie https://www.omie.com.br/.
+* **Paleta de Cores:** Adotei a identidade utilizada no site da Omie (https://www.omie.com.br/) adaptada para um layout de dashboard (Dark Sidebar / Light Content).
 * **Escalabilidade:** Espaçamentos e cores centralizados permitem mudanças globais com uma única linha de código.
 
 ### 3. Modularização (CSS Modules)
 Utilizei **CSS Modules** (`styles.module.scss`) para todos os componentes.
 * **Motivo:** Garante escopo local para as classes, evitando conflitos de especificidade e "vazamento" de estilos (side-effects).
 * **Padrão de Nomenclatura:** Adotei **CamelCase** para as classes para alinhar com a sintaxe de importação do JavaScript.
+
+### 4. Design Pattern: Barrel Pattern (Ícones)
+Para a organização dos assets SVG, apliquei o padrão **Barrel File**.
+* **Implementação:** Um arquivo `index.ts` na pasta de ícones centraliza e re-exporta todos os componentes.
+* **Benefício:** Simplifica as importações nos componentes consumidores, reduzindo múltiplas linhas de `import` para uma única chamada unificada:
+  ```tsx
+  import { Icons } from '@/components/icons';
+  ```
