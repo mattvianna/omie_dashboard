@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Icons } from '@/components/icons';
@@ -7,6 +8,7 @@ import styles from './styles.module.scss';
 
 export default function Sidebar() {
   const pathname = usePathname();
+  const [isCollapsed, setIsCollapsed] = useState(false);
 
   const menuItems = [
     { name: 'Dashboard', path: '/', icon: Icons.Dashboard },
@@ -16,7 +18,8 @@ export default function Sidebar() {
   ];
 
   return (
-    <aside className={`area-sidebar ${styles.sideBarContainer}`}>
+    <aside className={`area-sidebar ${styles.sideBarContainer} ${isCollapsed ? styles.collapsed : ''}`}>
+
       <nav className={styles.menuGroup}>
         <div className={styles.groupTitle}>Principal</div>
 
@@ -30,6 +33,7 @@ export default function Sidebar() {
               href={item.path}
               className={styles.navLink}
               data-active={isActive}
+              title={isCollapsed ? item.name : ''}
             >
               {IconComponent}
               <span>{item.name}</span>
@@ -37,6 +41,13 @@ export default function Sidebar() {
           );
         })}
       </nav>
+
+      <button
+        className={styles.toggleBtn}
+        onClick={() => setIsCollapsed(!isCollapsed)}
+      >
+        {isCollapsed ? Icons.ChevronRight : Icons.ChevronLeft}
+      </button>
     </aside>
   );
 }

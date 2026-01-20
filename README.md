@@ -80,3 +80,4 @@ Mantive a lógica usada em produtos, optei por manter o grid utilizando apenas c
 - **Ícones SVG Nativos:** Biblioteca interna de ícones (`src/components/icons`) com suporte a `currentColor`.
 - **Layout Responsivo:** Grid CSS inteligente que se adapta de mobile a telas ultrawide sem media queries complexas.
 - **Micro-interações:** Efeitos de hover, transições suaves de layout e feedbacks visuais.
+- **Collapsed Sidebar** Botão toggle em que permite colapsar a sidebar para uma melhor visualização.

@@ -4,9 +4,37 @@
   background-color: $bg-sidebar;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   padding: $spacing-xl $spacing-md;
   gap: $spacing-xxl;
-  height: 100%;
+  position: sticky;
+  top: 0;
+  border-right: 1px solid rgba($border-neutral, 0.1);
+  width: $sidebar-width;
+  transition: width 0.3s ease-in-out, padding 0.3s ease-in-out;
+  overflow: hidden;
+  white-space: nowrap;
+
+  &.collapsed {
+    width: $sidebar-width-collapsed;
+    padding: $spacing-xl $spacing-xs;
+
+    .groupTitle {
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+
+    .navLink {
+      justify-content: center;
+      gap: 0;
+
+      span {
+        opacity: 0;
+        width: 0;
+        visibility: hidden;
+      }
+    }
+  }
 }
 
 .menuGroup {
@@ -34,18 +62,28 @@
   font-size: 0.95rem;
   font-weight: 500;
   color: $text-white;
-
+  height: 48px;
   transition: all 0.2s ease-in-out;
   position: relative;
 
   svg {
     stroke: currentColor;
     transition: stroke 0.2s;
+    min-width: 24px;
+  }
+
+  span {
+    transition: opacity 0.2s ease-in-out;
+    opacity: 1;
   }
 
   &:hover {
     background-color: $hover-bg-color;
-    color: $text-light;
+    color: $text-color;
+
+    svg {
+      stroke: $text-color;
+    }
   }
 
   &[data-active="true"] {
@@ -58,5 +96,27 @@
     svg {
       stroke: $text-color;
     }
+  }
+}
+
+.toggleBtn {
+  width: $spacing-xxl;
+  height: $spacing-xxl;
+  background: transparent;
+  border: 1px solid rgba($text-light, 0.2);
+  color: $text-white;
+  padding: $spacing-sm;
+  border-radius: $border-radius;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  margin: 0 $spacing-sm;
+
+  &:hover {
+    background: rgba($secondary-color, 0.1);
+    border-color: $secondary-color;
+    color: $secondary-color;
   }
 }

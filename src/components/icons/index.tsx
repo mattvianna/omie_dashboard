@@ -9,6 +9,8 @@ import StockIcon from "./StockIcon";
 import TotalProductsIcon from "./TotalProductsIcon";
 import GridIcon from "./GridIcon";
 import ListIcon from "./ListIcon";
+import ChevronRightIcon from "./ChevronRightIcon";
+import ChevronLeftIcon from "./ChevronLeftIcon";
 
 const defaultSize = 24;
 
@@ -24,4 +26,6 @@ export const Icons = {
   Stock: <StockIcon size={defaultSize} />,
   Grid: <GridIcon size={defaultSize} />,
   List: <ListIcon size={defaultSize} />,
+  ChevronRight: <ChevronRightIcon size={defaultSize} />,
+  ChevronLeft: <ChevronLeftIcon size={defaultSize} />,
 };
