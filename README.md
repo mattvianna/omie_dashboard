@@ -5,7 +5,7 @@ Dashboard desenvolvido para visualização de métricas de produtos e usuários.
 ![Dashboard Preview](.github/preview.png)
 
 ## 🔗 Links
-- **Deploy (Vercel):** [Insira o Link Aqui]
+- **Deploy (Vercel):** [Omie Dashboard](https://omie-dashboard-zeta.vercel.app/)
 - **Repositório:** [Github](https://github.com/mattvianna/omie_dashboard)
 
 ## 🛠 Tech Stack
@@ -27,7 +27,7 @@ Dashboard desenvolvido para visualização de métricas de produtos e usuários.
 1. **Clone o repositório:**
 
    ```bash
-   git clone [https://github.com/SEU-USUARIO/NOME-DO-REPO.git](https://github.com/SEU-USUARIO/NOME-DO-REPO.git)
+   git clone https://github.com/SEU-USUARIO/NOME-DO-REPO.git
    cd NOME-DO-REPO
    ```
 
