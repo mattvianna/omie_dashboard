@@ -10,11 +10,15 @@ export default async function UsuariosPage() {
     <main className={styles.container}>
 
       <div className={styles.header}>
-        <h1>Gerenciar Usuários</h1>
-        <p>Diretório completo de colaboradores e clientes ({data.total} registros)</p>
+        <div className={styles.titleGroup}>
+          <h1>Gerenciar Usuários</h1>
+          <p>Diretório completo de colaboradores e clientes ({data.total} registros)</p>
+        </div>
       </div>
 
-      <UserList users={users} />
+      <section className={styles.content}>
+        <UserList users={users} />
+      </section>
 
     </main>
   );

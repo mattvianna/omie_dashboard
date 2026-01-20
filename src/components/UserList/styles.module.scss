@@ -23,7 +23,7 @@
   transition: all 0.2s ease;
   position: relative;
   flex-direction: column;
-  gap: 16px;
+  gap: $spacing-md;
 
   &:hover {
     border-color: $secondary-color;
@@ -115,7 +115,6 @@
   }
 }
 
-// --- SEÇÕES DE DADOS (Trabalho, Contato, Local) ---
 .sectionInfo {
   display: flex;
   flex-direction: column;

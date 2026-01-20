@@ -9,7 +9,6 @@ export default async function ProdutosPage() {
   return (
     <main className={styles.container}>
 
-      {/* Cabeçalho Limpo (Apenas Título) */}
       <div className={styles.header}>
         <div className={styles.titleGroup}>
           <h1>Gerenciar Produtos</h1>
