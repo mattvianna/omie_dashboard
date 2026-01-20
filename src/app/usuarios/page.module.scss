@@ -4,26 +4,32 @@
   display: flex;
   flex-direction: column;
   gap: $spacing-xl;
-  padding: $spacing-lg;
-  min-height: 100vh;
+  min-height: 100%;
 }
 
 .header {
   display: flex;
   flex-direction: column;
-  gap: $spacing-xs;
   margin-bottom: $spacing-md;
 
-  h1 {
-    font-size: 1.75rem;
-    font-weight: 700;
-    color: $text-color;
-    margin: 0;
-  }
+  .titleGroup {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-xl;
 
-  p {
-    color: $text-light;
-    font-size: 0.9rem;
-    margin: 0;
+    h1 {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: $text-color;
+    }
+
+    p {
+      color: $text-light;
+      font-size: 0.9rem;
+    }
   }
+}
+
+.content {
+  flex: 1;
 }

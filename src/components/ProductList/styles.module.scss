@@ -18,6 +18,10 @@
   border-radius: $border-radius;
   gap: $spacing-xs;
   border: 1px solid $border-neutral;
+
+  @media (max-width: $mobile-breakpoint) {
+    display: none;
+  }
 }
 
 .toggleBtn {

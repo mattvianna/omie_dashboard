@@ -119,4 +119,8 @@
     border-color: $secondary-color;
     color: $secondary-color;
   }
+
+  @media (max-width: $mobile-breakpoint) {
+    display: none;
+  }
 }

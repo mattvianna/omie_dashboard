@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Icons } from '@/components/icons';
@@ -10,6 +10,23 @@ export default function Sidebar() {
   const pathname = usePathname();
   const [isCollapsed, setIsCollapsed] = useState(false);
 
+  useEffect(() => {
+    if (window.innerWidth <= 768) {
+      setIsCollapsed(true);
+    }
+
+    const handleResize = () => {
+      if (window.innerWidth <= 768) {
+        setIsCollapsed(true);
+      } else {
+        setIsCollapsed(false);
+      }
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   const menuItems = [
     { name: 'Dashboard', path: '/', icon: Icons.Dashboard },
     { name: 'Produtos', path: '/produtos', icon: Icons.Produtos },
@@ -18,36 +35,38 @@ export default function Sidebar() {
   ];
 
   return (
-    <aside className={`area-sidebar ${styles.sideBarContainer} ${isCollapsed ? styles.collapsed : ''}`}>
+    <>
+      <aside className={`area-sidebar ${styles.sideBarContainer} ${isCollapsed ? styles.collapsed : ''}`}>
 
-      <nav className={styles.menuGroup}>
-        <div className={styles.groupTitle}>Principal</div>
+        <nav className={styles.menuGroup}>
+          <div className={styles.groupTitle}>Principal</div>
 
-        {menuItems.map((item) => {
-          const isActive = pathname === item.path;
-          const IconComponent = item.icon;
+          {menuItems.map((item) => {
+            const isActive = pathname === item.path;
+            const IconComponent = item.icon;
 
-          return (
-            <Link
-              key={item.path}
-              href={item.path}
-              className={styles.navLink}
-              data-active={isActive}
-              title={isCollapsed ? item.name : ''}
-            >
-              {IconComponent}
-              <span>{item.name}</span>
-            </Link>
-          );
-        })}
-      </nav>
+            return (
+              <Link
+                key={item.path}
+                href={item.path}
+                className={styles.navLink}
+                data-active={isActive}
+                title={isCollapsed ? item.name : ''}
+              >
+                {IconComponent}
+                <span>{item.name}</span>
+              </Link>
+            );
+          })}
+        </nav>
 
-      <button
-        className={styles.toggleBtn}
-        onClick={() => setIsCollapsed(!isCollapsed)}
-      >
-        {isCollapsed ? Icons.ChevronRight : Icons.ChevronLeft}
-      </button>
-    </aside>
+        <button
+          className={styles.toggleBtn}
+          onClick={() => setIsCollapsed(!isCollapsed)}
+        >
+          {isCollapsed ? Icons.ChevronRight : Icons.ChevronLeft}
+        </button>
+      </aside>
+    </>
   );
 }
