@@ -19,7 +19,6 @@ export default function Header() {
         <div className={styles.searchBox}>
           <input type="text" placeholder="Buscar..." />
         </div>
-        <button className={styles.filterButton}>Filtro</button>
       </div>
 
       <div className={styles.userContainer}>

@@ -10,32 +10,36 @@ body {
   font-family: $font-family-base;
   background-color: $bg-body;
   color: $text-color;
+  overflow: hidden;
 }
 
 .dashboard-grid {
   display: grid;
+  width: 100vw;
   height: 100vh;
   grid-template-areas:
     "header header"
     "sidebar main";
-  grid-template-columns: $sidebar-width 1fr;
+  grid-template-columns: max-content 1fr;
   grid-template-rows: $header-height 1fr;
+  transition: grid-template-columns 0.3s ease-in-out;
 }
 
 .area-header {
   grid-area: header;
   height: $header-height;
+  z-index: 10;
 }
 
 .area-sidebar {
   grid-area: sidebar;
-  width: $sidebar-width;
 }
 
 .area-main {
   grid-area: main;
   background-color: $bg-main;
   overflow-y: auto;
+  height: 100%;
   padding: $spacing-lg;
   border-top-left-radius: $border-radius;
   border-top-right-radius: $border-radius;
