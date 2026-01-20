@@ -4,11 +4,26 @@ import ProductList from "@/components/ProductList";
 import { Icons } from "@/components/icons";
 import styles from './page.module.scss';
 
-export default async function Dashboard() {
-  const data = await getProducts(0, 60);
-  const products = data.products;
+interface DashboardProps {
+  searchParams: Promise<{ q?: string }>;
+}
+
+export default async function Dashboard(props: DashboardProps) {
+  const searchParams = await props.searchParams;
+  const query = searchParams?.q || '';
+
+  const data = await getProducts(0, 100, query);
+  const products = query
+    ? data.products.filter(p =>
+      p.title.toLowerCase().includes(query.toLowerCase()) ||
+      p.category.toLowerCase().includes(query.toLowerCase())
+    )
+    : data.products;
+
   const totalProducts = products.length;
-  const avgPrice = products.reduce((acc, p) => acc + p.price, 0) / totalProducts;
+  const avgPrice = totalProducts > 0
+    ? products.reduce((acc, p) => acc + p.price, 0) / totalProducts
+    : 0;
   const uniqueCategories = new Set(products.map(p => p.category)).size;
   const totalStock = products.reduce((acc, p) => acc + p.stock, 0);
 
@@ -50,7 +65,7 @@ export default async function Dashboard() {
           Produtos Recentes
         </h2>
 
-        <ProductList products={products} />
+        <ProductList products={products} searchQuery={query} />
       </section>
     </main>
   );

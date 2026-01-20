@@ -81,3 +81,24 @@ Mantive a lógica usada em produtos, optei por manter o grid utilizando apenas c
 - **Layout Responsivo:** Grid CSS inteligente que se adapta de mobile a telas ultrawide sem media queries complexas.
 - **Micro-interações:** Efeitos de hover, transições suaves de layout e feedbacks visuais.
 - **Collapsed Sidebar:** Botão toggle em que permite colapsar a sidebar para uma melhor visualização.
+
+### 11. Busca Inteligente: 'URL as State'
+A implementação da busca segue o padrão "URL First", onde a barra de endereço é a fonte da verdade.
+
+- **Decisão:** Ao digitar, a URL é atualizada (?q=termo) via router.replace em vez de usar apenas um estado local (useState).
+- **Benefício:** Permite compartilhar links de buscas específicas e preserva o filtro ao recarregar a página.
+- **Performance:** Implementação de Debounce com useRef para gerenciar o timer. Diferente de variáveis locais, o ref persiste entre renderizações, garantindo que o delay de digitação funcione corretamente e evitando chamadas excessivas ao Router.
+
+### 12. Consistência de Dados (API vs. Visual)
+Foi identificada uma discrepância na API (DummyJSON), que utiliza "Fuzzy Search" (busca aproximada), retornando itens irrelevantes na pesquisa (ex: buscar "red" retornava eletrônicos caros com "infrared" na descrição).
+
+- **Problema:** Isso distorcia os KPIs (Média de Preço e Total), pois o cálculo matemático considerava itens que o filtro visual do frontend escondia.
+- **Solução:** Implementação de um Filtro Rigoroso no Server Component.
+- **Fluxo:** A página recebe os dados "sujos" da API, aplica o mesmo filtro estrito do frontend (Título/Categoria) e só então calcula os KPIs. Isso garante que os números do Dashboard batam exatamente com a lista visualizada pelo usuário.
+
+### 13. Padrão "Reset Key" para Listas Dinâmicas
+Para resolver conflitos entre a Busca e o Scroll Infinito, utilizei a prop especial key do React.
+
+- **Desafio:** Ao realizar uma nova busca, o componente de lista mantinha o estado antigo de scroll e paginação, quebrando o IntersectionObserver.
+- **Solução:** Aplicação de key={searchQuery} no componente `<ProductList />`.
+- **Resultado:** O React entende que, se a busca mudou, ele deve destruir a lista antiga e montar uma nova do zero (resetando scroll, offsets e observadores automaticamente) sem a necessidade de useEffect complexos para limpeza manual.

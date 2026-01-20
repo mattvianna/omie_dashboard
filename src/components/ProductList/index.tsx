@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import Image from 'next/image';
 import { Product } from '@/types/product';
 import { Icons } from '@/components/icons';
@@ -8,28 +8,48 @@ import styles from './styles.module.scss';
 
 interface ProductListProps {
   products: Product[];
+  searchQuery?: string;
 }
 
 const ITEMS_PER_PAGE = 8;
 
-export default function ProductList({ products: allProducts = [] }: ProductListProps) {
+export default function ProductList({ products: allProducts = [], searchQuery = '' }: ProductListProps) {
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   const [visibleCount, setVisibleCount] = useState(ITEMS_PER_PAGE);
   const [showScrollBtn, setShowScrollBtn] = useState(false);
 
   const sentinelRef = useRef<HTMLDivElement>(null);
 
-  const visibleProducts = allProducts.slice(0, visibleCount);
-  const hasMore = visibleCount < allProducts.length;
+  // Filtra os produtos com base na searchQuery
+  const filteredProducts = useMemo(() => {
+    if (!allProducts.length) return [];
+
+    const query = searchQuery.toLowerCase().trim();
+    if (!query) return allProducts;
+
+    return allProducts.filter((product) =>
+      product.title.toLowerCase().includes(query) ||
+      product.category.toLowerCase().includes(query)
+    );
+  }, [allProducts, searchQuery]);
+
+  // Reseta a contagem quando busca
+  useEffect(() => {
+    setVisibleCount(ITEMS_PER_PAGE);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, [searchQuery]);
+
+  const visibleProducts = filteredProducts.slice(0, visibleCount);
+  const hasMore = visibleCount < filteredProducts.length;
 
   // Função para carregar mais itens
   const loadMore = useCallback(() => {
     if (!hasMore) return;
 
     setTimeout(() => {
-      setVisibleCount((prev) => Math.min(prev + ITEMS_PER_PAGE, allProducts.length));
+      setVisibleCount((prev) => Math.min(prev + ITEMS_PER_PAGE, filteredProducts.length));
     }, 500);
-  }, [hasMore, allProducts.length]);
+  }, [hasMore, filteredProducts.length]);
 
   // Mantém a referência da função loadMore atualizada
   const loadMoreRef = useRef(loadMore);
@@ -39,21 +59,28 @@ export default function ProductList({ products: allProducts = [] }: ProductListP
 
   // Infinite Scroll
   useEffect(() => {
-    const scrollRoot = document.querySelector('main');
+    if (!hasMore) return;
+
     const observer = new IntersectionObserver((entries) => {
       if (entries[0].isIntersecting) {
         loadMoreRef.current();
       }
     }, {
-      root: scrollRoot,
+      root: null,
       rootMargin: '100px'
     });
 
-    if (sentinelRef.current) {
-      observer.observe(sentinelRef.current);
+    const currentSentinel = sentinelRef.current;
+
+    if (currentSentinel) {
+      observer.observe(currentSentinel);
     }
-    return () => observer.disconnect();
-  }, []);
+
+    return () => {
+      if (currentSentinel) observer.unobserve(currentSentinel);
+      observer.disconnect();
+    };
+  }, [hasMore]);
 
   // Botão Voltar ao Topo
   useEffect(() => {
@@ -148,6 +175,12 @@ export default function ProductList({ products: allProducts = [] }: ProductListP
             </article>
           );
         })}
+
+        {visibleProducts.length === 0 && (
+          <div style={{ gridColumn: '1 / -1', textAlign: 'center', padding: '40px' }}>
+            <p>Nenhum produto encontrado para "<strong>{searchQuery}</strong>".</p>
+          </div>
+        )}
       </div>
 
       {hasMore && (
@@ -158,7 +191,7 @@ export default function ProductList({ products: allProducts = [] }: ProductListP
 
       {!hasMore && (
         <p className={styles.endMessage}>
-          Você visualizou todos os {allProducts.length} itens.
+          Você visualizou todos os {filteredProducts.length} itens.
         </p>
       )}
 
