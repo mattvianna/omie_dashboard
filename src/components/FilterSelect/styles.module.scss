@@ -1,0 +1,47 @@
+@use '@/styles/variables' as *;
+
+.wrapper {
+  position: relative;
+  display: inline-block;
+  max-width: 200px;
+
+  @media (max-width: $mobile-breakpoint) {
+    width: 100%;
+  }
+}
+
+.select {
+  appearance: none;
+  width: 100%;
+  padding: $spacing-sm $spacing-md;
+  padding-right: $spacing-xl;
+  background-color: $tertiary-color;
+  border: 1px solid $border-neutral;
+  border-radius: $border-radius;
+  font-size: 14px;
+  color: $text-color;
+  cursor: pointer;
+  outline: none;
+  height: 40px;
+  transition: all 0.2s;
+  font-family: inherit;
+
+  &:hover {
+    border-color: $bg-card-color;
+  }
+
+  &:focus {
+    border-color: $border-highlight;
+    box-shadow: 0 0 0 2px rgba(0, 0, 255, 0.1);
+  }
+}
+
+.icon {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  color: $text-light;
+  display: flex;
+}

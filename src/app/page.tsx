@@ -1,24 +1,45 @@
 import { getProducts } from "@/services/product";
 import KpiCard from "@/components/KpiCard";
 import ProductList from "@/components/ProductList";
+import FilterSelect from "@/components/FilterSelect";
 import { Icons } from "@/components/icons";
 import styles from './page.module.scss';
 
 interface DashboardProps {
-  searchParams: Promise<{ q?: string }>;
+  searchParams: Promise<{
+    q?: string,
+    category?: string
+  }>;
 }
+
+const CATEGORIES = [
+  { label: 'Beleza', value: 'beauty' },
+  { label: 'Fragrâncias', value: 'fragrances' },
+  { label: 'Móveis', value: 'furniture' },
+  { label: 'Mercado', value: 'groceries' },
+];
 
 export default async function Dashboard(props: DashboardProps) {
   const searchParams = await props.searchParams;
   const query = searchParams?.q || '';
+  const categoryFilter = searchParams?.category || '';
 
   const data = await getProducts(0, 100, query);
-  const products = query
-    ? data.products.filter(p =>
+
+  let products = data.products;
+
+  if (query) {
+    products = products.filter(p =>
       p.title.toLowerCase().includes(query.toLowerCase()) ||
       p.category.toLowerCase().includes(query.toLowerCase())
-    )
-    : data.products;
+    );
+  }
+
+  if (categoryFilter) {
+    products = products.filter(p =>
+      p.category.toLowerCase() === categoryFilter.toLowerCase()
+    );
+  }
 
   const totalProducts = products.length;
   const avgPrice = totalProducts > 0
@@ -32,6 +53,12 @@ export default async function Dashboard(props: DashboardProps) {
       <div className={styles.pageHeader}>
         <h1>Dashboard</h1>
         <p>Visão geral do sistema</p>
+
+        <FilterSelect
+          paramKey="category"
+          options={CATEGORIES}
+          placeholder="Todas as Categorias"
+        />
       </div>
 
       <section className={styles.kpiGrid}>

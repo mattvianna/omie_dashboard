@@ -76,27 +76,27 @@ Mantive a lógica usada em produtos, optei por manter o grid utilizando apenas c
 **Tipagem Estrita:** Interfaces TypeScript completas.
 - **Camada de Serviço:** Separação de responsabilidade em `services/users.ts` com tratamento de erros robusto.
 
-### 10. UX & UI Design
+### 11. UX & UI Design
 - **Ícones SVG Nativos:** Biblioteca interna de ícones (`src/components/icons`) com suporte a `currentColor`.
 - **Layout Responsivo:** Grid CSS inteligente que se adapta de mobile a telas ultrawide sem media queries complexas.
 - **Micro-interações:** Efeitos de hover, transições suaves de layout e feedbacks visuais.
 - **Collapsed Sidebar:** Botão toggle em que permite colapsar a sidebar para uma melhor visualização.
 
-### 11. Busca Inteligente: 'URL as State'
+### 12. Busca Inteligente: 'URL as State'
 A implementação da busca segue o padrão "URL First", onde a barra de endereço é a fonte da verdade.
 
 - **Decisão:** Ao digitar, a URL é atualizada (?q=termo) via router.replace em vez de usar apenas um estado local (useState).
 - **Benefício:** Permite compartilhar links de buscas específicas e preserva o filtro ao recarregar a página.
 - **Performance:** Implementação de Debounce com useRef para gerenciar o timer. Diferente de variáveis locais, o ref persiste entre renderizações, garantindo que o delay de digitação funcione corretamente e evitando chamadas excessivas ao Router.
 
-### 12. Consistência de Dados (API vs. Visual)
+### 13. Consistência de Dados (API vs. Visual)
 Foi identificada uma discrepância na API (DummyJSON), que utiliza "Fuzzy Search" (busca aproximada), retornando itens irrelevantes na pesquisa (ex: buscar "red" retornava eletrônicos caros com "infrared" na descrição).
 
 - **Problema:** Isso distorcia os KPIs (Média de Preço e Total), pois o cálculo matemático considerava itens que o filtro visual do frontend escondia.
 - **Solução:** Implementação de um Filtro Rigoroso no Server Component.
 - **Fluxo:** A página recebe os dados "sujos" da API, aplica o mesmo filtro estrito do frontend (Título/Categoria) e só então calcula os KPIs. Isso garante que os números do Dashboard batam exatamente com a lista visualizada pelo usuário.
 
-### 13. Sincronização de Estado e Reatividade
+### 14. Sincronização de Estado e Reatividade
 Para garantir a fluidez entre a Busca e o Scroll Infinito, optei por uma estratégia de **controle de estado reativo** em vez de forçar a desmontagem do componente.
 
 * **Desafio:** Ao realizar uma nova busca, o componente precisava saber que deveria abandonar a paginação atual (ex: 100 itens carregados) e voltar ao estado inicial, sem perder a performance.
@@ -108,3 +108,17 @@ Para garantir a fluidez entre a Busca e o Scroll Infinito, optei por uma estrat�
   }, [searchQuery]);
   ```
 Ao detectar uma nova busca, o componente reseta o contador de itens visíveis para o padrão.
+
+### 15. Abstração de Filtros
+Para atender o requisito de filtragem sem duplicar código, criei um componente genérico <FilterSelect />.
+
+- **Decisão:** Em vez de criar componentes acoplados como CategoryFilter ou GenderFilter, desenvolvi um componente genérico que manipula a URL.
+- **Implementação:** O componente recebe apenas a paramKey (ex: "category") e as options. Quem detém o contexto do negócio (quais opções exibir) é a Página (page.tsx), não o componente visual.
+- **Benefício:** O mesmo componente é reutilizado para filtrar categorias na tela de Produtos e Gêneros nas suas respectivas telas de usuários, mantendo a consistência visual e lógica.
+
+### 16. Filtragem Híbrida
+Para garantir que os filtros de dropdown funcionem em conjunto com a busca textual:
+
+- **Fluxo:** A página lê múltiplos parâmetros da URL (?q=phone&category=smartphones).
+- **Lógica:** Aplica-se uma cadeia de filtros (filter chaining) nos dados recebidos da API antes de passá-los para a renderização.
+- **Resultado:** O usuário pode refinar buscas complexas (ex: buscar "Red" apenas dentro da categoria "Lipsticks") e as KPIs recalculam instantaneamente com base nesse subconjunto de dados.
