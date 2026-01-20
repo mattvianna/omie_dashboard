@@ -28,7 +28,7 @@ export default async function ProdutosPage(props: ProdutosPageProps) {
       </div>
 
       <section className={styles.content}>
-        <ProductList products={allProducts} />
+        <ProductList products={allProducts} searchQuery={query} />
       </section>
 
     </main>

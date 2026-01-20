@@ -96,9 +96,15 @@ Foi identificada uma discrepância na API (DummyJSON), que utiliza "Fuzzy Search
 - **Solução:** Implementação de um Filtro Rigoroso no Server Component.
 - **Fluxo:** A página recebe os dados "sujos" da API, aplica o mesmo filtro estrito do frontend (Título/Categoria) e só então calcula os KPIs. Isso garante que os números do Dashboard batam exatamente com a lista visualizada pelo usuário.
 
-### 13. Padrão "Reset Key" para Listas Dinâmicas
-Para resolver conflitos entre a Busca e o Scroll Infinito, utilizei a prop especial key do React.
+### 13. Sincronização de Estado e Reatividade
+Para garantir a fluidez entre a Busca e o Scroll Infinito, optei por uma estratégia de **controle de estado reativo** em vez de forçar a desmontagem do componente.
 
-- **Desafio:** Ao realizar uma nova busca, o componente de lista mantinha o estado antigo de scroll e paginação, quebrando o IntersectionObserver.
-- **Solução:** Aplicação de key={searchQuery} no componente `<ProductList />`.
-- **Resultado:** O React entende que, se a busca mudou, ele deve destruir a lista antiga e montar uma nova do zero (resetando scroll, offsets e observadores automaticamente) sem a necessidade de useEffect complexos para limpeza manual.
+* **Desafio:** Ao realizar uma nova busca, o componente precisava saber que deveria abandonar a paginação atual (ex: 100 itens carregados) e voltar ao estado inicial, sem perder a performance.
+* **Solução:** Implementação de um `useEffect` no componente `<ProductList />` que monitora alterações na prop `searchQuery`.
+* **Resultado:**
+  ```tsx
+  useEffect(() => {
+    setVisibleCount(ITEMS_PER_PAGE); // Reseta visualização para 8 itens
+  }, [searchQuery]);
+  ```
+Ao detectar uma nova busca, o componente reseta o contador de itens visíveis para o padrão.
