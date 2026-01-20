@@ -5,19 +5,13 @@ interface IconProps {
 
 export default function TotalProductsIcon({ size = 24, color = "currentColor" }: IconProps) {
   return (
-    <svg
-      width={size}
-      height={size}
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke={color}
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M20.91 8.84L8.56 2.23a1.93 1.93 0 0 0-1.81 0L3.1 4.13a2.12 2.12 0 0 0-.05 3.69l12.22 6.93a2 2 0 0 0 1.94 0L21 12.5a2.12 2.12 0 0 0-.09-3.66Z" />
-      <path d="M7 6v13.28A2 2 0 0 0 8 21.1a2 2 0 0 0 1.94-1L17 16" />
-      <path d="M17 10.85V16" />
+    <svg width={size} height={size} viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M48 0H0V48H48V0Z" fill="white" fillOpacity="0.01" />
+      <path d="M44 14L24 4L4 14V34L24 44L44 34V14Z" stroke={color} strokeWidth="4" strokeLinejoin="round" />
+      <path d="M4 14L24 24" stroke={color} strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M24 44V24" stroke={color} strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M44 14L24 24" stroke={color} strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M34 9L14 19" stroke={color} strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   );
 }

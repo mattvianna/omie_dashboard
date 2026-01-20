@@ -2,12 +2,50 @@
 
 Dashboard desenvolvido para visualização de métricas de produtos e usuários. O projeto foca em arquitetura escalável, performance e fidelidade ao layout proposto, utilizando **Next.js** e **SCSS**.
 
+![Dashboard Preview](.github/preview.png)
+
+## 🔗 Links
+- **Deploy (Vercel):** [Insira o Link Aqui]
+- **Repositório:** [Github](https://github.com/mattvianna/omie_dashboard)
+
 ## 🛠 Tech Stack
 
 * **Core:** Next.js 16 + React 19
 * **Linguagem:** TypeScript 5
 * **Estilização:** SCSS (Sass) + CSS Modules
 * **Gerenciador de Pacotes:** NPM
+* **API:** [DummyJSON](https://dummyjson.com)
+
+## 🚀 Como Rodar o Projeto
+
+### Pré-requisitos
+* Node.js (v18 ou superior)
+* NPM ou Yarn
+
+### Passo a Passo
+
+1. **Clone o repositório:**
+
+   ```bash
+   git clone [https://github.com/SEU-USUARIO/NOME-DO-REPO.git](https://github.com/SEU-USUARIO/NOME-DO-REPO.git)
+   cd NOME-DO-REPO
+   ```
+
+2. **Instale as dependências:**
+
+    ```bash
+    npm install
+    # ou
+    yarn install
+    ```
+
+3. **Execute o projeto:**
+
+    ```bash
+    npm run dev
+    ```
+
+4. **Acesse o projeto: Abra http://localhost:3000 no seu navegador.**
 
 ## 🏗 Arquitetura & Decisões Técnicas
 
@@ -122,3 +160,41 @@ Para garantir que os filtros de dropdown funcionem em conjunto com a busca textu
 - **Fluxo:** A página lê múltiplos parâmetros da URL (?q=phone&category=smartphones).
 - **Lógica:** Aplica-se uma cadeia de filtros (filter chaining) nos dados recebidos da API antes de passá-los para a renderização.
 - **Resultado:** O usuário pode refinar buscas complexas (ex: buscar "Red" apenas dentro da categoria "Lipsticks") e as KPIs recalculam instantaneamente com base nesse subconjunto de dados.
+
+
+## 📂 Estrutura de Pastas
+
+```bash
+omie_dashboard/
+├── package.json
+├── tsconfig.json
+├── next.config.ts
+├── README.md
+├── public/                     # assets (imagens, fontes, preview)
+└── src/
+    ├── app/                    # rotas & layouts (Next.js App Router)
+    │   ├── globals.scss
+    │   ├── layout.tsx
+    │   ├── page.tsx            # dashboard (Server Component)
+    │   ├── produtos/           # rota /produtos
+    │   │   └── page.tsx
+    │   ├── usuarios/           # rota /usuarios
+    │   │   └── page.tsx
+    │   └── configuracao/       # rota /configuracao
+    │       └── page.tsx
+    ├── components/             # componentes reutilizáveis
+    │   ├── Header/
+    │   ├── Sidebar/
+    │   ├── SearchInput/
+    │   ├── FilterSelect/
+    │   ├── ProductList/
+    │   ├── UserList/
+    │   ├── KpiCard/
+    │   └── icons/
+    ├── services/               # chamadas API
+    │   ├── product.ts
+    │   └── users.ts
+    ├── styles/                 # tokens e utilitários SCSS
+    │   └── _variables.scss
+    └── types/                  # tipagens TypeScript
+```
