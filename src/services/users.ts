@@ -2,19 +2,24 @@ import { UsersResponse } from "@/types/users"; // Ajuste o import conforme seu a
 
 const BASE_URL = 'https://dummyjson.com/users';
 
-export async function getUsers(skip: number = 0, limit: number = 30): Promise<UsersResponse> {
+export async function getUsers(skip: number = 0, limit: number = 30, query?: string): Promise<UsersResponse> {
   try {
-    const url = `${BASE_URL}?limit=${limit}&skip=${skip}`;
+    let url;
 
-    const response = await fetch(url, {
-      cache: 'no-store',
-    });
-
-    if (!response.ok) {
-      throw new Error(`Erro ao buscar usuários: ${response.statusText}`);
+    // Se tiver termo de busca, muda o endpoint
+    if (query && query.trim() !== '') {
+      url = `${BASE_URL}/search?q=${query}&limit=${limit}&skip=${skip}`;
+    } else {
+      url = `${BASE_URL}?limit=${limit}&skip=${skip}`;
     }
 
-    const data: UsersResponse = await response.json();
+    const res = await fetch(url, { cache: 'no-store' });
+
+    if (!res.ok) {
+      throw new Error(`Falha ao buscar produtos: ${res.statusText}`);
+    }
+
+    const data: UsersResponse = await res.json();
     return data;
 
   } catch (error) {
@@ -27,10 +32,4 @@ export async function getUsers(skip: number = 0, limit: number = 30): Promise<Us
       limit: 0
     };
   }
-}
-
-export async function getUserById(id: number) {
-  const response = await fetch(`${BASE_URL}/${id}`);
-  if (!response.ok) throw new Error('Failed to fetch user');
-  return response.json();
 }

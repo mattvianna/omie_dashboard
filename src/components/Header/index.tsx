@@ -1,3 +1,6 @@
+'use client';
+
+import SearchInput from '@/components/SearchInput';
 import Image from 'next/image';
 import styles from './styles.module.scss';
 
@@ -16,9 +19,7 @@ export default function Header() {
       </div>
 
       <div className={styles.searchFilter}>
-        <div className={styles.searchBox}>
-          <input type="text" placeholder="Buscar..." />
-        </div>
+        <SearchInput />
       </div>
 
       <div className={styles.userContainer}>

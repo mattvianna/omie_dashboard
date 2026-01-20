@@ -28,39 +28,6 @@
   margin: 0 $spacing-xl 0 0;
   gap: $spacing-sm;
 
-  .searchBox {
-    flex: .5;
-    display: flex;
-    align-items: center;
-    background-color: $tertiary-color;
-    border: 1px solid $border-neutral;
-    border-radius: $border-radius;
-    padding: $spacing-sm $spacing-md;
-
-    input {
-      flex: 1;
-      border: none;
-      outline: none;
-      background: transparent;
-      color: $text-color;
-      font-size: 1rem;
-
-      &::placeholder {
-        color: $text-light;
-      }
-    }
-
-    @media (max-width: $mobile-breakpoint) {
-      margin: 0 8px;
-      max-width: none;
-      flex: 1;
-
-      input {
-        font-size: 0.8rem;
-      }
-    }
-  }
-
   .filterButton {
     margin-right: $spacing-sm;
     background-color: $tertiary-color;
