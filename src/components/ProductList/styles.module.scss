@@ -60,6 +60,11 @@
     grid-template-columns: 1fr;
     gap: $spacing-md;
   }
+
+  @media (max-width: $mobile-breakpoint) {
+    grid-template-columns: 1fr !important;
+    gap: 16px;
+  }
 }
 
 .card {
@@ -86,6 +91,19 @@
 
     &:hover {
       transform: translateX($spacing-xs);
+    }
+  }
+
+  @media (max-width: $mobile-breakpoint) {
+    .listView & {
+      flex-direction: column !important;
+      height: auto;
+      align-items: flex-start !important;
+
+      img {
+        width: 100% !important;
+        height: 200px !important;
+      }
     }
   }
 }
@@ -123,6 +141,16 @@
   &:hover img {
     transform: scale(1.05);
   }
+
+  @media (max-width: $mobile-breakpoint) {
+    .listView & {
+      width: 100% !important;
+      height: 200px !important;
+      aspect-ratio: 4/3 !important;
+      border-right: none !important;
+      border-bottom: 1px solid $border-neutral;
+    }
+  }
 }
 
 .content {
@@ -137,6 +165,15 @@
     align-items: center;
     padding: 0 $spacing-md;
     justify-content: space-between;
+  }
+
+  @media (max-width: 768px) {
+    .listView & {
+      flex-direction: column !important;
+      align-items: flex-start !important;
+      padding: 16px !important;
+      gap: 8px;
+    }
   }
 }
 
