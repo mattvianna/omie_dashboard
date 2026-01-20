@@ -1,0 +1,242 @@
+@use '@/styles/variables' as *;
+
+.header {
+  margin-bottom: $spacing-xl;
+
+  h1 {
+    font-size: 1.75rem;
+    color: $text-color;
+    margin-bottom: 8px;
+  }
+
+  p {
+    color: $text-light;
+  }
+}
+
+.grid {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-lg;
+}
+
+.card {
+  background: $tertiary-color;
+  border-radius: $border-radius;
+  padding: $spacing-xl;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  border: 1px solid $border-neutral;
+
+  h2 {
+    font-size: 18px;
+    margin-bottom: $spacing-lg;
+    color: $text-color;
+    padding-bottom: $spacing-md;
+    border-bottom: 1px solid $border-neutral;
+  }
+}
+
+// --- Forms ---
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-md;
+
+  label {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-sm;
+    font-size: 14px;
+    font-weight: 500;
+    color: $text-color;
+
+    input,
+    textarea {
+      padding: $spacing-sm;
+      border: 1px solid $border-neutral;
+      border-radius: $border-radius;
+      font-family: inherit;
+
+      &:focus {
+        border-color: $secondary-color;
+        outline: none;
+      }
+    }
+  }
+}
+
+.inputRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: $spacing-md;
+
+  @media (max-width: $mobile-breakpoint) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.avatarRow {
+  display: flex;
+  align-items: center;
+  gap: $spacing-lg;
+  margin-bottom: $spacing-md;
+
+  .avatarPlaceholder {
+    width: 64px;
+    height: 64px;
+    background: $primary-color;
+    color: $text-color;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    font-weight: bold;
+  }
+
+  .avatarInfo {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-xs;
+
+    span {
+      font-size: 12px;
+      color: $text-light;
+    }
+
+    button {
+      cursor: pointer;
+    }
+  }
+}
+
+// --- Toggles & Settings ---
+.settingRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: $spacing-sm 0;
+
+  .settingInfo {
+    h3 {
+      font-size: 16px;
+      margin-bottom: $spacing-xs;
+    }
+
+    p {
+      font-size: 14px;
+      color: $text-light;
+      margin: 0;
+    }
+  }
+}
+
+.toggle {
+  width: 48px;
+  height: 24px;
+  background: $bg-card-color;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  position: relative;
+  transition: background 0.3s;
+  padding: 2px;
+
+  .thumb {
+    width: 20px;
+    height: 20px;
+    background: $tertiary-color;
+    border-radius: 50%;
+    transition: transform 0.3s;
+  }
+
+  &.active {
+    background: $secondary-color;
+
+    .thumb {
+      transform: translateX($spacing-lg);
+    }
+  }
+}
+
+.divider {
+  border: 0;
+  border-top: 1px solid $border-neutral;
+  margin: $spacing-md 0;
+}
+
+// --- Checkboxes ---
+.checkboxGroup {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-sm;
+}
+
+.checkboxRow {
+  display: flex;
+  align-items: center;
+  gap: $spacing-md;
+  cursor: pointer;
+  font-size: 14px;
+
+  input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    accent-color: $secondary-color;
+  }
+}
+
+// --- Footer Actions ---
+.footerActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: $spacing-md;
+  margin-top: $spacing-xl;
+  padding-bottom: $spacing-xl;
+
+  button {
+    padding: $spacing-md $spacing-lg;
+    border-radius: $border-radius;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    transition: opacity 0.2s;
+
+    &:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+    }
+  }
+
+  .btnCancel {
+    background: transparent;
+    color: $text-light;
+
+    &:hover {
+      color: $text-color;
+      background: $bg-card-color;
+    }
+  }
+
+  .btnSave {
+    background: $secondary-color;
+    color: $text-color;
+
+    &:hover {
+      filter: brightness(0.95);
+    }
+  }
+
+  .btnSecondary {
+    padding: $spacing-md $spacing-lg;
+    background: $tertiary-color;
+    border: 1px solid $border-neutral;
+    border-radius: $border-radius;
+    cursor: pointer;
+    font-size: 14px;
+
+    &:hover {
+      background: $bg-card-color;
+    }
+  }
+}

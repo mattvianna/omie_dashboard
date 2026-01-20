@@ -31,7 +31,7 @@ export default function Sidebar() {
     { name: 'Dashboard', path: '/', icon: Icons.Dashboard },
     { name: 'Produtos', path: '/produtos', icon: Icons.Produtos },
     { name: 'Usuários', path: '/usuarios', icon: Icons.Usuarios },
-    { name: 'Configurações', path: '/config', icon: Icons.Config },
+    { name: 'Configurações', path: '/configuracao', icon: Icons.Config },
   ];
 
   return (
