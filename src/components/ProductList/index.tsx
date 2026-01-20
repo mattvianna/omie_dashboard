@@ -11,7 +11,7 @@ interface ProductListProps {
   searchQuery?: string;
 }
 
-const ITEMS_PER_PAGE = 8;
+const ITEMS_PER_PAGE = 16;
 
 export default function ProductList({ products: allProducts = [], searchQuery = '' }: ProductListProps) {
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
