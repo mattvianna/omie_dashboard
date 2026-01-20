@@ -1,5 +1,6 @@
 'use client';
 
+import { Suspense } from 'react';
 import SearchInput from '@/components/SearchInput';
 import Image from 'next/image';
 import styles from './styles.module.scss';
@@ -19,7 +20,9 @@ export default function Header() {
       </div>
 
       <div className={styles.searchFilter}>
-        <SearchInput />
+        <Suspense fallback={<div style={{ width: 200 }} />}>
+          <SearchInput />
+        </Suspense>
       </div>
 
       <div className={styles.userContainer}>
